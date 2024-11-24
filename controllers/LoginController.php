@@ -54,6 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ];
 
         // Redirect to index.php (after successful login)
+        
+        $_SESSION['loggedin'] = true; // Set this upon successful login
+
         header('Location: ../views/index.php');
         exit();
     } else {
