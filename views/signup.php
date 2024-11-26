@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="../assets_/css/style.css">
     <script src="../assets_/js/signup-validation.js" defer></script> <!-- Updated script -->
 </head>
+
 <body>
     <div class="container">
         <form id="signup-form" action="../controllers/SignupController.php" method="POST" class="signup-form">
@@ -24,5 +26,20 @@
             <button type="submit" id="submit-button" disabled>Sign Up</button> <!-- Button initially disabled -->
         </form>
     </div>
+
+    <script>
+        // Inside your sign-up form submission logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const signupForm = document.getElementById('signup-form');
+            signupForm.addEventListener('submit', function(event) {
+                // After successful sign-up
+                const username = document.getElementById('username').value;
+                localStorage.setItem('username', username); // Save the username
+                localStorage.setItem('isFirstVisit', 'true'); // Set flag to indicate first login visit
+            });
+        });
+    </script>
+
 </body>
+
 </html>
