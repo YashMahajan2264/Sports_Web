@@ -135,9 +135,12 @@
     <h2>Alaybee Sports</h2>
     <p id="tagline">Sports Sales Since 1988</p>
   </div>
+  
 
   <ul>
-    <li><a href="#home">Home</a></li>
+    <li><a href="index.php">Home</a></li>
+    <li><a href="cricket.php">Cricket</a></li>
+    <li ><a href="football.php">Football</a></li>
     <li><a href="#aboutus">About Us</a></li>
     <li><a href="#product">Product</a></li>
     <li><a href="#services">Services</a></li>

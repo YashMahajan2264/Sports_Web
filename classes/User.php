@@ -32,5 +32,16 @@ class User {
             return false;
         }
     }
+
+    //to check if a field exists in the database
+    public function checkFieldExists($field, $value) {
+        $query = "SELECT COUNT(*) as count FROM users WHERE $field = :value";
+        $stmt = $this->conn->prepare($query);
+        $stmt->bindParam(':value', $value);
+        $stmt->execute();
+
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $result['count'] > 0; 
+    }
 }
 ?>

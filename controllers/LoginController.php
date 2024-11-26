@@ -1,9 +1,5 @@
 <?php
 
-// Enable error reporting for debugging
-ini_set('display_errors', 1);
-error_reporting(E_ALL);
-
 session_start();
 
 require_once '../classes/Database.php';  // Ensure this file exists and is correct
@@ -17,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'] ?? null;
     $password = $_POST['password'] ?? null;
 
-    // Debugging: Check form data
+    
     var_dump("Form submitted:", $username, $password);
 
     // Server-side validation: ensure both fields are filled
@@ -27,10 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Check if the username exists in the database
-    $user = $db->getUserByUsername($username);  // Ensure this function exists and works correctly
 
-    // Debugging: Inspect database query result
+    $user = $db->getUserByUsername($username); 
+
+   
     echo "<pre>";
     var_dump("User fetched from DB:", $user);
     echo "</pre>";
@@ -41,26 +37,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
-    // Validate the password (assuming password_hash was used)
+  
     if (password_verify($password, $user['password_hash'])) { // Use 'password_hash' field from DB
-        // Debugging: Confirm successful login
+       
         var_dump("Password verified!");
 
-        // Store user info in session after successful login
         $_SESSION['user'] = [
             'id' => $user['id'],
             'username' => $user['username'],
             'email' => $user['email']
         ];
-
-        // Redirect to index.php (after successful login)
         
-        $_SESSION['loggedin'] = true; // Set this upon successful login
+        $_SESSION['loggedin'] = true; 
 
         header('Location: ../views/index.php');
         exit();
     } else {
-        // Debugging: Password verification failed
         var_dump("Password verification failed!");
 
         $_SESSION['error'] = 'Invalid username or password.';
