@@ -2,10 +2,10 @@
 session_start();
 require_once '../controllers/AccessControl.php';  // Include the AccessControl.php file
 
-if (!isset($_SESSION['loggedin'])) {
-    header("Location: login.php");
-    exit();
-}
+// if (!isset($_SESSION['loggedin'])) {
+//     header("Location: login.php");
+//     exit();
+// }
 
 if (isset($_SESSION['error'])) {
     echo "<p style='color:red;'>{$_SESSION['error']}</p>";
