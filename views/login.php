@@ -30,9 +30,9 @@
                 const savedUsername = localStorage.getItem('username');
                 if (savedUsername) {
                     const usernameField = document.getElementsByName('username')[0];
-                    usernameField.value = savedUsername; // Prefill the username
+                    usernameField.value = savedUsername; 
                 }
-                // After pre-filling, remove the flag so it doesn't happen again
+                //remove the flag
                 localStorage.removeItem('isFirstVisit');
             }
         });

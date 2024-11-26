@@ -23,19 +23,26 @@
             <small id="phone-error" class="error-message"></small>
 
             <input type="password" id="password" name="password" placeholder="Password" required>
+            <!-- Add this dropdown to your signup form -->
+            <label for="sport">Favorite Sport</label>
+            <select id="sport" name="sport">
+                <option value="" disabled selected>Select your favorite sport</option>
+                <option value="cricket">Cricket</option>
+                <option value="football">Football</option>
+            </select>
+
             <button type="submit" id="submit-button" disabled>Sign Up</button> <!-- Button initially disabled -->
         </form>
     </div>
 
     <script>
-        // Inside your sign-up form submission logic
         document.addEventListener('DOMContentLoaded', function() {
             const signupForm = document.getElementById('signup-form');
             signupForm.addEventListener('submit', function(event) {
                 // After successful sign-up
                 const username = document.getElementById('username').value;
-                localStorage.setItem('username', username); // Save the username
-                localStorage.setItem('isFirstVisit', 'true'); // Set flag to indicate first login visit
+                localStorage.setItem('username', username);
+                localStorage.setItem('isFirstVisit', 'true');
             });
         });
     </script>

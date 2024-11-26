@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once '../controllers/AccessControl.php';  // Include the AccessControl.php file
+
+if (!hasAccessToPage('football')) {
+    $_SESSION['error'] = 'You do not have access to the Football page.';
+    header("Location: index.php");
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 

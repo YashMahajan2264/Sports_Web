@@ -1,3 +1,15 @@
+<?php
+session_start();
+require_once '../controllers/AccessControl.php';  // Include the AccessControl.php file
+
+if (!hasAccessToPage('cricket')) {
+    $_SESSION['error'] = 'You do not have access to the Cricket page.';
+    header("Location: index.php");
+    exit();
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 

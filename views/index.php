@@ -1,3 +1,19 @@
+<?php
+session_start();
+require_once '../controllers/AccessControl.php';  // Include the AccessControl.php file
+
+if (!isset($_SESSION['loggedin'])) {
+    header("Location: login.php");
+    exit();
+}
+
+if (isset($_SESSION['error'])) {
+    echo "<p style='color:red;'>{$_SESSION['error']}</p>";
+    unset($_SESSION['error']); 
+}
+
+?>
+
 <!DOCTYPE html>
 <html>
 
@@ -148,7 +164,6 @@
     <li><a href="#contactus">Contact US</a></li>
 
     <?php
-    session_start();
     if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
       echo '<li style="float: right;"><a href="../controllers/logout.php">Logout</a></li>';
     } else {
