@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($username) || empty($password)) {
         $_SESSION['error'] = 'Username and password are required.';
-        echo "<script>alert('Username and password are required.'); window.location.href = '../views/login.php';</script>";
+        header('Location: ../views/login.php'); // Redirect to login page
         exit();
     }
 
@@ -22,13 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (!$user) {
         $_SESSION['error'] = 'Invalid username or password.';
-        echo "<script>alert('Invalid username or password.'); window.location.href = '../views/login.php';</script>";
+        header('Location: ../views/login.php'); // Redirect to login page
         exit();
     }
 
     // Verify the password
     if (password_verify($password, $user['password_hash'])) { 
-
         $_SESSION['user'] = [
             'id' => $user['id'],
             'username' => $user['username'],
@@ -45,11 +44,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $_SESSION['loggedin'] = true; 
 
-        header('Location: ../views/index.php');
+        header('Location: ../views/index.php'); // Redirect to the homepage
         exit();
     } else {
         $_SESSION['error'] = 'Invalid username or password.';
-        echo "<script>alert('Invalid username or password.'); window.location.href = '../views/login.php';</script>";
+        header('Location: ../views/login.php'); // Redirect to login page
         exit();
     }
 } else {

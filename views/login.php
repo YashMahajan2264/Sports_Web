@@ -1,5 +1,11 @@
 <?php
+session_start();
 
+// Check if there is any error message from the session
+if (isset($_SESSION['error'])) {
+    $errorMessage = $_SESSION['error'];
+    unset($_SESSION['error']); // Clear the error message after showing it
+}
 ?>
 
 <!DOCTYPE html>
@@ -10,7 +16,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <link rel="stylesheet" href="../assets_/css/style.css">
-
+    <!-- Include SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body>
@@ -23,7 +30,9 @@
             <p>Don't have an account? <a href="signup.php">Sign up</a></p>
         </form>
     </div>
+
     <script>
+        // Check if it's the user's first visit and pre-fill the username
         document.addEventListener('DOMContentLoaded', function() {
             const isFirstVisit = localStorage.getItem('isFirstVisit');
             if (isFirstVisit === 'true') {
@@ -32,12 +41,20 @@
                     const usernameField = document.getElementsByName('username')[0];
                     usernameField.value = savedUsername; 
                 }
-                //remove the flag
+                // Remove the flag
                 localStorage.removeItem('isFirstVisit');
             }
         });
-    </script>
 
+        <?php if (isset($errorMessage)): ?>
+            // Show SweetAlert error message if there was a session error
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '<?php echo $errorMessage; ?>',
+            });
+        <?php endif; ?>
+    </script>
 </body>
 
 </html>

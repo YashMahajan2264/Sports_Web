@@ -1,23 +1,29 @@
+
 <?php
 session_start();
 require_once '../controllers/AccessControl.php';  // Include the AccessControl.php file
 
-if (!hasAccessToPage('football')) {
+if (!hasAccessToPage('football')) {  // Adjust 'cricket' for 'football' in football.php
     $_SESSION['error'] = 'You do not have access to the Football page.';
     header("Location: index.php");
     exit();
 }
-
 ?>
 
+
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Football - Alaybee Sports</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
     body {
       margin: 0px;
+      font-family: Arial, sans-serif;
     }
 
     ul {
@@ -48,8 +54,6 @@ if (!hasAccessToPage('football')) {
       color: deeppink;
       cursor: pointer;
     }
-
-    
 
     .jumbotron {
       background-color: #3197ED;
