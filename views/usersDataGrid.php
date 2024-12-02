@@ -32,6 +32,7 @@
 
             $("#gridContainer").dxDataGrid({
                 dataSource: "../classes/getUsers.php",
+                remoteOperations: false,
                 columnAutoWidth: true,
                 columns: [{
                         dataField: "id",
@@ -53,6 +54,43 @@
                         }],
                     },
                     {
+                        caption: "Email Length",
+                        calculateCellValue: function(data) {
+                            return data.email ? data.email.length : 0; 
+                        },
+                        dataType: "number",
+                        allowFiltering: true,
+                        headerFilter: {
+                            dataSource: [{
+                                    text: "Invalid Email",
+                                    value: "invalid"
+                                }, 
+                                {
+                                    text: "Valid Email",
+                                    value: "valid"
+                                } 
+                            ],
+                        },
+                        calculateFilterExpression: function(filterValue) {
+                            
+                            if (filterValue === "invalid") {
+                                return function(data) {
+                                   
+                                    return data.email && data.email.length < 15;
+                                };
+                            }
+                            if (filterValue === "valid") {
+                                return function(data) {
+                                 
+                                    return data.email && data.email.length >= 15;
+                                };
+                            }
+                            return null;
+                        }
+                    },
+
+
+                    {
                         dataField: "phone_number",
                         caption: "Phone Number",
                         validationRules: [{
@@ -66,14 +104,7 @@
                             return cellInfo.value ? cellInfo.value : "Not Selected";
                         }
                     },
-                    {
-                        dataField: "password_hash",
-                        validationRules: [{
-                            type: "required"
-                        }],
-                        caption: "Encoded Password",
-                        visible: false
-                    }
+
 
                 ],
                 paging: {
@@ -151,25 +182,41 @@
                 },
                 export: {
                     enabled: true,
-                    formats: ['xlsx']
+                    formats: ['xlsx'],
+
                 },
                 onExporting(e) {
                     if (e.format === 'xlsx') {
                         const workbook = new ExcelJS.Workbook();
                         const worksheet = workbook.addWorksheet("Main sheet");
+
                         DevExpress.excelExporter.exportDataGrid({
                             worksheet: worksheet,
-                            component: e.component,
-                        }).then(function() {
-                            workbook.xlsx.writeBuffer().then(function(buffer) {
+                            component: e.component
+                        }).then(() => {
+
+                            const newCol = worksheet.columns.length + 1;
+                            worksheet.getRow(1).getCell(newCol).value = 'Contact Info';
+
+                            worksheet.eachRow((row, rowNumber) => {
+                                //its imp to skip first row as it is header field
+                                if (rowNumber === 1) {
+                                    return;
+                                }
+
+                                const phoneNumber = row.getCell(4).value;
+                                const email = row.getCell(3).value;
+                                row.getCell(newCol).value = `${phoneNumber} | ${email}`;
+                            });
+                            workbook.xlsx.writeBuffer().then((buffer) => {
                                 saveAs(new Blob([buffer], {
                                     type: "application/octet-stream"
-                                }), "Users.xlsx");
+                                }), "UsersContact_Info.xlsx");
                             });
                         });
                     }
+                }
 
-                },
             });
         });
     </script>
